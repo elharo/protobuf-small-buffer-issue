@@ -1,0 +1,22 @@
+syntax = "proto2";
+
+enum Type {
+    UNKNOWN = 0;
+    PING = 1;
+    READ = 2;
+    DELETE = 3;
+}
+
+enum Compression {
+    NONE = 0;
+    SNAPPY = 1;
+    LZ4 = 2;
+}
+
+message Request {
+	optional Type type = 1;
+	optional string filename = 2;
+	optional Compression compression = 3;
+	optional bool cacheEnabled = 4;
+}
+
