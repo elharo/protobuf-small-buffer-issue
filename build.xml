@@ -38,30 +38,26 @@
 
     <target name="proto25" depends="prepare">
         <property name="protobuf" value="${lib.dir}/protobuf-java-2.5.0.jar" />
-
-        <javac srcdir="src-proto25" destdir="${build.dir}">
-            <classpath>
-                <pathelement location="${protobuf}"/>
-            </classpath>
-        </javac>
+        <property name="src-gen" value="src-proto25" />
 
         <antcall target="compileAndRun" />
     </target>
 
     <target name="proto35" depends="prepare">
         <property name="protobuf" value="${lib.dir}/protobuf-java-3.5.1.jar" />
-
-        <javac srcdir="src-proto35" destdir="${build.dir}">
-            <classpath>
-                <pathelement location="${protobuf}"/>
-            </classpath>
-        </javac>
+        <property name="src-gen" value="src-proto35" />
 
         <antcall target="compileAndRun" />
     </target>
 
 
     <target name="compileAndRun">
+        <javac srcdir="${src-gen}" destdir="${build.dir}">
+            <classpath>
+                <pathelement location="${protobuf}"/>
+            </classpath>
+        </javac>
+
         <javac srcdir="${src.dir}" destdir="${build.dir}">
             <classpath>
                 <pathelement location="${protobuf}"/>
