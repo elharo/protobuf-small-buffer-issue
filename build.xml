@@ -1,13 +1,11 @@
 <?xml version="1.0"?>
 <project basedir="." name="test" >
     <property name="src.dir" value="${basedir}/src" />
-    <property name="src-gen.dir" value="${basedir}/src-gen" />
     <property name="build.dir" value="${basedir}/build" />
     <property name="lib.dir" value="${basedir}/lib" />
 
     <target name="clean">
         <delete dir="${build.dir}" />
-        <delete dir="${src-gen.dir}" />
     </target>
 
     <target name="libs">
@@ -22,16 +20,30 @@
 
     <target name="prepare" depends="clean, libs">
         <mkdir dir="${build.dir}" />
-        <mkdir dir="${src-gen.dir}" />
+    </target>
+
+    <target name="proto25-gen">
+        <exec executable="/usr/local/opt/protobuf@2.5/bin/protoc" >
+            <arg value="--java_out=src-proto25" />
+            <arg value="src/Test.proto" />
+        </exec>
+    </target>
+
+    <target name="proto35-gen">
+        <exec executable="/usr/local/opt/protobuf@3.5/bin/protoc" >
+            <arg value="--java_out=src-proto35" />
+            <arg value="src/Test.proto" />
+        </exec>
     </target>
 
     <target name="proto25" depends="prepare">
         <property name="protobuf" value="${lib.dir}/protobuf-java-2.5.0.jar" />
 
-        <exec executable="/usr/local/opt/protobuf@2.5/bin/protoc" >
-            <arg value="--java_out=${src-gen.dir}" />
-            <arg value="src/Test.proto" />
-        </exec>
+        <javac srcdir="src-proto25" destdir="${build.dir}">
+            <classpath>
+                <pathelement location="${protobuf}"/>
+            </classpath>
+        </javac>
 
         <antcall target="compileAndRun" />
     </target>
@@ -39,22 +51,17 @@
     <target name="proto35" depends="prepare">
         <property name="protobuf" value="${lib.dir}/protobuf-java-3.5.1.jar" />
 
-        <exec executable="/usr/local/opt/protobuf@3.5/bin/protoc" >
-            <arg value="--java_out=${src-gen.dir}" />
-            <arg value="src/Test.proto" />
-        </exec>
+        <javac srcdir="src-proto35" destdir="${build.dir}">
+            <classpath>
+                <pathelement location="${protobuf}"/>
+            </classpath>
+        </javac>
 
         <antcall target="compileAndRun" />
     </target>
 
 
     <target name="compileAndRun">
-        <javac srcdir="${src-gen.dir}" destdir="${build.dir}">
-            <classpath>
-                <pathelement location="${protobuf}"/>
-            </classpath>
-        </javac>
-
         <javac srcdir="${src.dir}" destdir="${build.dir}">
             <classpath>
                 <pathelement location="${protobuf}"/>
