@@ -10,10 +10,10 @@
 
     <target name="libs">
         <mkdir dir="${lib.dir}" />
-        <get src="http://central.maven.org/maven2/com/google/protobuf/protobuf-java/2.5.0/protobuf-java-2.5.0.jar"
+        <get src="https://repo1.maven.org/maven2/com/google/protobuf/protobuf-java/2.5.0/protobuf-java-2.5.0.jar"
              dest="${lib.dir}/protobuf-java-2.5.0.jar"
              skipexisting="true" />
-        <get src="http://central.maven.org/maven2/com/google/protobuf/protobuf-java/3.5.1/protobuf-java-3.5.1.jar"
+        <get src="https://repo1.maven.org/maven2/com/google/protobuf/protobuf-java/3.5.1/protobuf-java-3.5.1.jar"
              dest="${lib.dir}/protobuf-java-3.5.1.jar"
              skipexisting="true" />
     </target>
